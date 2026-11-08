@@ -71,6 +71,10 @@ Enrichment connectors have `CONNECTOR_AUTO=false` to protect API quotas; trigger
 
 `make upstream` (or `scripts/fetch-upstream.sh <git-ref>`) overwrites `opencti/` with the official files. Never edit them by hand — put changes in `connectors/` or a compose override.
 
+## XTM One (disabled)
+
+XTM One is Filigran's paid add-on, so `compose.override.yaml` puts `xtm-one`, `xtm-one-worker` and `pgsql-xtm-one` behind an opt-in `xtm-one` profile and blanks OpenCTI's XTM One URL. To enable it, add `xtm-one` to `COMPOSE_PROFILES` and delete the two `XTM__XTM_ONE_*` lines from the override. This also saves ~1 GB RAM.
+
 ## Notes
 
 - `include` resolves each file relative to its own directory, so upstream's `./rabbitmq.conf` mount works unchanged. Duplicate service names across included files are an error, not a merge.

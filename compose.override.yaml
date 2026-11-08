@@ -1,0 +1,18 @@
+# Local overrides — kept out of ./opencti so upstream stays verbatim.
+# Compose loads this file automatically next to compose.yaml.
+#
+# XTM One (Filigran's paid AI platform) is disabled by default: its services sit
+# behind the opt-in "xtm-one" profile. To enable it, add `xtm-one` to
+# COMPOSE_PROFILES in .env.
+services:
+  xtm-one:
+    profiles: [xtm-one]
+  xtm-one-worker:
+    profiles: [xtm-one]
+  pgsql-xtm-one:
+    profiles: [xtm-one]
+  opencti:
+    environment:
+      # Don't point the platform at an XTM One instance that isn't running.
+      XTM__XTM_ONE_URL: ""
+      XTM__XTM_ONE_TOKEN: ""
