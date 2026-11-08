@@ -1,0 +1,17 @@
+# abuse.ch ThreatFox — https://github.com/OpenCTI-Platform/connectors/tree/master/external-import/threatfox
+services:
+  connector-threatfox:
+    image: opencti/connector-threatfox:latest
+    profiles: [connectors, threatfox]
+    environment:
+      - OPENCTI_URL=http://opencti:8080
+      - OPENCTI_TOKEN=${OPENCTI_ADMIN_TOKEN}
+      - CONNECTOR_ID=${CONNECTOR_THREATFOX_ID}
+      - CONNECTOR_NAME=ThreatFox
+      - CONNECTOR_SCOPE=threatfox
+      - CONNECTOR_LOG_LEVEL=error
+      - THREATFOX_INTERVAL=3 # days
+    restart: always
+    depends_on:
+      opencti:
+        condition: service_healthy

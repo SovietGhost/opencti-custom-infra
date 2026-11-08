@@ -1,0 +1,21 @@
+# abuse.ch URLhaus — https://github.com/OpenCTI-Platform/connectors/tree/master/external-import/urlhaus
+services:
+  connector-urlhaus:
+    image: opencti/connector-urlhaus:latest
+    profiles: [connectors, urlhaus]
+    environment:
+      - OPENCTI_URL=http://opencti:8080
+      - OPENCTI_TOKEN=${OPENCTI_ADMIN_TOKEN}
+      - CONNECTOR_ID=${CONNECTOR_URLHAUS_ID}
+      - CONNECTOR_NAME=Abuse.ch URLhaus
+      - CONNECTOR_SCOPE=urlhaus
+      - CONNECTOR_LOG_LEVEL=error
+      - URLHAUS_INTERVAL=3 # days
+      - URLHAUS_CSV_URL=https://urlhaus.abuse.ch/downloads/csv_recent/
+      - URLHAUS_DEFAULT_X_OPENCTI_SCORE=80
+      - URLHAUS_IMPORT_OFFLINE=true
+      - URLHAUS_THREATS_FROM_LABELS=true
+    restart: always
+    depends_on:
+      opencti:
+        condition: service_healthy

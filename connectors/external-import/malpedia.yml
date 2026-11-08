@@ -1,0 +1,22 @@
+# Malpedia — https://github.com/OpenCTI-Platform/connectors/tree/master/external-import/malpedia
+services:
+  connector-malpedia:
+    image: opencti/connector-malpedia:latest
+    profiles: [connectors, malpedia]
+    environment:
+      - OPENCTI_URL=http://opencti:8080
+      - OPENCTI_TOKEN=${OPENCTI_ADMIN_TOKEN}
+      - CONNECTOR_ID=${CONNECTOR_MALPEDIA_ID}
+      - CONNECTOR_NAME=Malpedia
+      - CONNECTOR_SCOPE=malpedia
+      - CONNECTOR_LOG_LEVEL=info
+      - CONNECTOR_DURATION_PERIOD=PT24H
+      - MALPEDIA_AUTH_KEY=${MALPEDIA_AUTH_KEY}
+      - MALPEDIA_IMPORT_INTRUSION_SETS=true
+      - MALPEDIA_IMPORT_YARA=true
+      - MALPEDIA_CREATE_INDICATORS=true
+      - MALPEDIA_CREATE_OBSERVABLES=true
+    restart: always
+    depends_on:
+      opencti:
+        condition: service_healthy

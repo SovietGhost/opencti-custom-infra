@@ -1,0 +1,13 @@
+# CISA Known Exploited Vulnerabilities — https://github.com/OpenCTI-Platform/connectors/tree/master/external-import/cisa-known-exploited-vulnerabilities
+services:
+  connector-cisa-kev:
+    image: opencti/connector-cisa-known-exploited-vulnerabilities:latest
+    profiles: [connectors, cisa-kev]
+    environment:
+      - OPENCTI_URL=http://opencti:8080
+      - OPENCTI_TOKEN=${OPENCTI_ADMIN_TOKEN}
+      - CONNECTOR_ID=${CONNECTOR_CISA_KEV_ID}
+    restart: always
+    depends_on:
+      opencti:
+        condition: service_healthy

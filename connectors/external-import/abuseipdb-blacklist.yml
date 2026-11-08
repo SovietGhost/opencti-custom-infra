@@ -1,0 +1,19 @@
+# AbuseIPDB IP blacklist — https://github.com/OpenCTI-Platform/connectors/tree/master/external-import/abuseipdb-ipblacklist
+services:
+  connector-abuseipdb-blacklist:
+    image: opencti/connector-abuseipdb-ipblacklist:latest
+    profiles: [connectors, abuseipdb-blacklist]
+    environment:
+      - OPENCTI_URL=http://opencti:8080
+      - OPENCTI_TOKEN=${OPENCTI_ADMIN_TOKEN}
+      - CONNECTOR_ID=${CONNECTOR_ABUSEIPDB_BLACKLIST_ID}
+      - CONNECTOR_NAME=AbuseIPDB IP Blacklist
+      - CONNECTOR_SCOPE=abuseipdb
+      - CONNECTOR_LOG_LEVEL=error
+      - CONNECTOR_DURATION_PERIOD=PT12H
+      - ABUSEIPDB_API_KEY=${ABUSEIPDB_API_KEY}
+      - ABUSEIPDB_SCORE=${ABUSEIPDB_BLACKLIST_SCORE}
+    restart: always
+    depends_on:
+      opencti:
+        condition: service_healthy

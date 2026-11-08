@@ -1,0 +1,22 @@
+# Shodan — https://github.com/OpenCTI-Platform/connectors/tree/master/internal-enrichment/shodan
+services:
+  connector-shodan:
+    image: opencti/connector-shodan:latest
+    profiles: [connectors, shodan]
+    environment:
+      - OPENCTI_URL=http://opencti:8080
+      - OPENCTI_TOKEN=${OPENCTI_ADMIN_TOKEN}
+      - CONNECTOR_ID=${CONNECTOR_SHODAN_ID}
+      - CONNECTOR_NAME=Shodan
+      - CONNECTOR_SCOPE=ipv4-addr,indicator
+      - CONNECTOR_AUTO=false
+      - CONNECTOR_LOG_LEVEL=error
+      - CONNECTOR_MAX_TLP=TLP:AMBER
+      - SHODAN_TOKEN=${SHODAN_TOKEN}
+      - SHODAN_DEFAULT_SCORE=50
+      - SHODAN_IMPORT_SEARCH_RESULTS=true
+      - SHODAN_CREATE_NOTE=true
+    restart: always
+    depends_on:
+      opencti:
+        condition: service_healthy

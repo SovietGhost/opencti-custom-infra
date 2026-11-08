@@ -1,0 +1,19 @@
+# VirusTotal — https://github.com/OpenCTI-Platform/connectors/tree/master/internal-enrichment/virustotal
+services:
+  connector-virustotal:
+    image: opencti/connector-virustotal:latest
+    profiles: [connectors, virustotal]
+    environment:
+      - OPENCTI_URL=http://opencti:8080
+      - OPENCTI_TOKEN=${OPENCTI_ADMIN_TOKEN}
+      - CONNECTOR_ID=${CONNECTOR_VIRUSTOTAL_ID}
+      - CONNECTOR_NAME=VirusTotal
+      - CONNECTOR_SCOPE=StixFile,Artifact,IPv4-Addr,Domain-Name,Url,Hostname
+      - CONNECTOR_AUTO=false # true = enrich every new observable (burns API quota)
+      - CONNECTOR_LOG_LEVEL=error
+      - VIRUSTOTAL_TOKEN=${VIRUSTOTAL_TOKEN}
+      - VIRUSTOTAL_MAX_TLP=TLP:AMBER
+    restart: always
+    depends_on:
+      opencti:
+        condition: service_healthy

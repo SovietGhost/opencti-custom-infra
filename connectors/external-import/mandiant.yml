@@ -1,0 +1,27 @@
+# Mandiant / Google Threat Intelligence — https://github.com/OpenCTI-Platform/connectors/tree/master/external-import/mandiant
+services:
+  connector-mandiant:
+    image: opencti/connector-mandiant:latest
+    profiles: [connectors, mandiant]
+    environment:
+      - OPENCTI_URL=http://opencti:8080
+      - OPENCTI_TOKEN=${OPENCTI_ADMIN_TOKEN}
+      - CONNECTOR_ID=${CONNECTOR_MANDIANT_ID}
+      - CONNECTOR_NAME=Mandiant
+      - CONNECTOR_SCOPE=mandiant
+      - CONNECTOR_LOG_LEVEL=error
+      - CONNECTOR_DURATION_PERIOD=PT5M
+      - MANDIANT_API_V4_KEY_ID=${MANDIANT_API_V4_KEY_ID}
+      - MANDIANT_API_V4_KEY_SECRET=${MANDIANT_API_V4_KEY_SECRET}
+      - MANDIANT_MARKING=amber+strict
+      - MANDIANT_INDICATOR_MINIMUM_SCORE=80
+      - MANDIANT_IMPORT_INDICATORS=true
+      - MANDIANT_IMPORT_ACTORS=true
+      - MANDIANT_IMPORT_MALWARES=true
+      - MANDIANT_IMPORT_CAMPAIGNS=true
+      - MANDIANT_IMPORT_REPORTS=true
+      - MANDIANT_IMPORT_VULNERABILITIES=false
+    restart: always
+    depends_on:
+      opencti:
+        condition: service_healthy

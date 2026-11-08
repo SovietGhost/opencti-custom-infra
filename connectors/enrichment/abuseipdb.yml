@@ -1,0 +1,16 @@
+# AbuseIPDB enrichment — https://github.com/OpenCTI-Platform/connectors/tree/master/internal-enrichment/abuseipdb
+services:
+  connector-abuseipdb:
+    image: opencti/connector-abuseipdb:latest
+    profiles: [connectors, abuseipdb]
+    environment:
+      - OPENCTI_URL=http://opencti:8080
+      - OPENCTI_TOKEN=${OPENCTI_ADMIN_TOKEN}
+      - CONNECTOR_ID=${CONNECTOR_ABUSEIPDB_ID}
+      - CONNECTOR_NAME=AbuseIPDB
+      - CONNECTOR_LOG_LEVEL=error
+      - ABUSEIPDB_API_KEY=${ABUSEIPDB_API_KEY}
+    restart: always
+    depends_on:
+      opencti:
+        condition: service_healthy

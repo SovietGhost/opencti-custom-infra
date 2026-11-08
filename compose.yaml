@@ -1,0 +1,35 @@
+# Root compose file. Contains no services of its own — it only composes:
+#   - the official OpenCTI stack, kept verbatim in ./opencti (see scripts/fetch-upstream.sh)
+#   - our additional connectors, one self-contained file each in ./connectors
+#
+# `include` resolves each file relative to its own directory, so upstream's
+# ./rabbitmq.conf bind mount keeps working. All files share the single root
+# .env for interpolation.
+include:
+  # --- Official OpenCTI platform (unmodified upstream) ---
+  - path: ./opencti/docker-compose.yml
+    env_file: ./.env
+
+  # --- External-import connectors ---
+  - path: ./connectors/external-import/alienvault.yml
+    env_file: ./.env
+  - path: ./connectors/external-import/malpedia.yml
+    env_file: ./.env
+  - path: ./connectors/external-import/mandiant.yml
+    env_file: ./.env
+  - path: ./connectors/external-import/cisa-kev.yml
+    env_file: ./.env
+  - path: ./connectors/external-import/threatfox.yml
+    env_file: ./.env
+  - path: ./connectors/external-import/urlhaus.yml
+    env_file: ./.env
+  - path: ./connectors/external-import/abuseipdb-blacklist.yml
+    env_file: ./.env
+
+  # --- Internal-enrichment connectors ---
+  - path: ./connectors/enrichment/virustotal.yml
+    env_file: ./.env
+  - path: ./connectors/enrichment/shodan.yml
+    env_file: ./.env
+  - path: ./connectors/enrichment/abuseipdb.yml
+    env_file: ./.env

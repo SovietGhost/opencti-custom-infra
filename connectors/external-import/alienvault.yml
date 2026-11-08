@@ -1,0 +1,27 @@
+# AlienVault OTX — https://github.com/OpenCTI-Platform/connectors/tree/master/external-import/alienvault
+services:
+  connector-alienvault:
+    image: opencti/connector-alienvault:latest
+    profiles: [connectors, alienvault]
+    environment:
+      - OPENCTI_URL=http://opencti:8080
+      - OPENCTI_TOKEN=${OPENCTI_ADMIN_TOKEN}
+      - CONNECTOR_ID=${CONNECTOR_ALIENVAULT_ID}
+      - CONNECTOR_NAME=AlienVault
+      - CONNECTOR_SCOPE=alienvault
+      - CONNECTOR_LOG_LEVEL=error
+      - CONNECTOR_DURATION_PERIOD=PT30M
+      - ALIENVAULT_BASE_URL=https://otx.alienvault.com
+      - ALIENVAULT_API_KEY=${ALIENVAULT_API_KEY}
+      - ALIENVAULT_TLP=White
+      - ALIENVAULT_CREATE_OBSERVABLES=true
+      - ALIENVAULT_CREATE_INDICATORS=true
+      # Beware: an old start date imports a very large number of pulses.
+      - ALIENVAULT_PULSE_START_TIMESTAMP=2025-01-01T00:00:00Z
+      - ALIENVAULT_REPORT_TYPE=threat-report
+      - ALIENVAULT_REPORT_STATUS=New
+      - ALIENVAULT_ENABLE_RELATIONSHIPS=true
+    restart: always
+    depends_on:
+      opencti:
+        condition: service_healthy
